@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Grades</title>
+</head>
+<body>
+    <h1>Student Grades</h1>
+    <div id="studentData">
+        <!-- Student data will be displayed here -->
+    </div>
+    <div id="stats">
+        <p>Total Students: <span id="totalStudents"></span></p>
+        <p>Lowest Score: <span id="lowestScore"></span></p>
+        <p>Highest Score: <span id="highestScore"></span></p>
+        <p>Average Score: <span id="averageScore"></span></p>
+    </div>
+    
+    <script>
+        let grades = "jim|25, sue|32, mary|34, ann|22, ted|28, frank|15, lisa|19, mike|30, ahn|26, vishaya|27";
+        
+        // Split the 'grades' string into an array of student records
+        let studentArray = grades.split(', ');
+
+        let totalScore = 0;
+        let lowest = Infinity;
+        let highest = -Infinity;
+        
+        // Create an array to store sorted student records
+        let sortedStudents = [];
+        
+        // Loop through each student record
+        for (let i = 0; i < studentArray.length; i++) {
+            let studentRecord = studentArray[i].split('|');
+            let name = studentRecord[0];
+            let score = parseInt(studentRecord[1]);
+            
+            // Capitalize the first letter of the student's name
+            name = name.charAt(0).toUpperCase() + name.slice(1);
+            
+            // Push the student record into the sortedStudents array
+            sortedStudents.push({ name, score });
+            
+            // Calculate total score, lowest, and highest scores
+            totalScore += score;
+            if (score < lowest) {
+                lowest = score;
+            }
+            if (score > highest) {
+                highest = score;
+            }
+        }
+
+        // Sort the student records alphabetically by name
+        sortedStudents.sort((a, b) => a.name.localeCompare(b.name));
+        
+        // Display the total number of students and statistical information
+        document.getElementById('totalStudents').textContent = studentArray.length;
+        document.getElementById('lowestScore').textContent = lowest;
+        document.getElementById('highestScore').textContent = highest;
+        
+        // Display each student's name and score in alphabetical order
+        sortedStudents.forEach(student => {
+            document.getElementById('studentData').innerHTML += `<p>${student.name} - ${student.score}</p>`;
+        });
+
+        // Calculate the average score
+        let average = totalScore / studentArray.length;
+        document.getElementById('averageScore').textContent = average.toFixed(2);
+    </script>
+</body>
+</html>

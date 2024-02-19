@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -57,3 +58,64 @@
     </script>
 </body>
 </html>
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card Dealing Program</title>
+</head>
+<body>
+    <h1>Card Dealing Program</h1>
+    <button onclick="dealCards()">Deal Cards</button>
+    <div id="hand"></div>
+
+    <script>
+        // Define a Card object with 'value' and 'suit' properties
+        function Card(value, suit) {
+            this.value = value;
+            this.suit = suit;
+        }
+
+        // Create an array of 52 Card objects to represent a deck
+        const deck = [];
+        const suits = ["Spades", "Hearts", "Diamonds", "Clubs"];
+        const values = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"];
+
+        for (const suit of suits) {
+            for (const value of values) {
+                deck.push(new Card(value, suit));
+            }
+        }
+
+        // Define a function to randomly select 5 cards from the deck
+        function dealCards() {
+            const handContainer = document.getElementById("hand");
+            handContainer.innerHTML = ""; // Clear the previously displayed hand
+
+            // Shuffle the deck using Fisher-Yates algorithm
+            for (let i = deck.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [deck[i], deck[j]] = [deck[j], deck[i]];
+            }
+
+            // Select 5 cards from the shuffled deck
+            const hand = deck.slice(0, 5);
+
+            // Display information about the selected cards on the HTML page
+            for (const card of hand) {
+                const cardName = card.value === "10" ? "10" : card.value;
+                const cardInfo = `${cardName} of ${card.suit}`;
+                const cardElement = document.createElement("p");
+                cardElement.textContent = cardInfo;
+                handContainer.appendChild(cardElement);
+            }
+
+            // Remove the selected cards from the deck to avoid reusing
+            deck.splice(0, 5);
+        }
+    </script>
+</body>
+</html>
+>>>>>>> ffef80424984369d202081b1a5ab82a31ce800f6

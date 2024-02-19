@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Harry Potter Characters</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+            crossorigin="anonymous"></script>
+    <style>
+        .over {
+            background-color: orange;
+        }
+        .selected {
+            background-color: green;
+        }
+        /* Additional styling for alternating row colors */
+        .odd-row {
+            background-color: #f2f2f2;
+        }
+        .even-row {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<div id="buttons"></div>
+<table border="1">
+    <thead>
+        <tr>
+            <th>name</th>
+            <th>role</th>
+            <th>house</th>
+            <th>gender</th>
+            <th>alignment</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Table rows will be added here dynamically -->
+    </tbody>
+</table>
+<script>
+$(document).ready(function() {
+    let characters = [
+        {name: "Albus Dumbledore", role: "staff", house: "Gryffindor", gender: "m", alignment: "good"},
+        {name: "Nymphadora Tonks", role: "", house: "Hufflepuff", gender: "f", alignment: "good"},
+        {name: "Ron Weasley", role: "student", house: "Gryffindor", gender: "m", alignment: "good"},
+        {name: "Ginny Weasley", role: "student", house: "Gryffindor", gender: "f", alignment: "good"},
+        {name: "Hermione Granger", role: "student", house: "Gryffindor", gender: "f", alignment: "good"},
+        {name: "Mad-eye Moody", role: "staff", house: "", gender: "m", alignment: "good"},
+        {name: "Prof McGonagall", role: "staff", house: "Gryffindor", gender: "f", alignment: "good"},
+        {name: "Harry Potter", role: "student", house: "Gryffindor", gender: "m", alignment: "good"},
+        {name: "Draco Malfoy", role: "student", house: "Slytherin", gender: "m", alignment: "evil"},
+        {name: "Hagrid", role: "staff", house: "Gryffindor", gender: "m", alignment: "good"},
+        {name: "Luna Lovegood", role: "student", house: "Ravenclaw", gender: "f", alignment: "good"},
+        {name: "Voldemort", role: "", house: "Slytherin", gender: "m", alignment: "evil"},
+        {name: "Bellatrix Lestrange", role: "", house: "Slytherin", gender: "f", alignment: "evil"},
+        {name: "Severus Snape", role: "staff", house: "Slytherin", gender: "m", alignment: "?"}
+    ];
+
+    let uniqueHouses = {};
+    characters.forEach(function(character, index) {
+        $('tbody').append('<tr class="character-row" data-house="' + character.house + '">' +
+            '<td>' + character.name + '</td>' +
+            '<td>' + character.role + '</td>' +
+            '<td>' + character.house + '</td>' +
+            '<td>' + character.gender + '</td>' +
+            '<td>' + character.alignment + '</td>' +
+            '</tr>');
+        if (!uniqueHouses[character.house] && character.house) {
+            uniqueHouses[character.house] = true;
+        }
+    });
+
+    Object.keys(uniqueHouses).forEach(function(house) {
+        $('#buttons').append('<button class="house-button" data-house="' + house + '">' + house + '</button>');
+    });
+
+    $('#buttons').append('<button id="reset">Reset</button>');
+
+    $('.house-button').click(function() {
+        var house = $(this).data('house');
+        $('.character-row').hide();
+        $('.character-row[data-house="' + house + '"]').show();
+        styleRows();
+    });
+
+    $('#reset').click(function() {
+        $('.character-row').show();
+        styleRows();
+    });
+
+    function styleRows() {
+        $('tr.character-row:visible').each(function(index) {
+            $(this).css('background-color', index % 2 == 0 ? '#f0f0f0' : '#ffffff');
+        });
+    }
+
+    styleRows(); // Initial call to style rows
+});
+</script>
+</body>
+</html>
