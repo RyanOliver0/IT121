@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Day to Night Cycle</title>
+</head>
+<body>
+    <canvas id="myCanvas" width="800" height="600" style="border:1px solid #000"></canvas>
+    <script>
+        const canvas = document.getElementById('myCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let lastTime = 0;
+        let cycle = 0; // Represents the time of day, from 0 (day) to 1 (night)
+
+        function drawSunMoon(cycle) {
+            ctx.save();
+            let x = cycle * canvas.width;
+            let y = canvas.height / 2 + (Math.sin(cycle * Math.PI) * canvas.height / 4);
+            ctx.beginPath();
+            ctx.arc(x, y, 50, 0, Math.PI * 2);
+            ctx.fillStyle = cycle < 0.5 ? '#FFD700' : '#F0E68C';
+            ctx.fill();
+            ctx.restore();
+        }
+
+        function drawHouse() {
+            ctx.save();
+            // House base
+            ctx.fillStyle = '#8B4513';
+            ctx.fillRect(100, 400, 200, 200);
+            // Roof
+            ctx.beginPath();
+            ctx.moveTo(100, 400);
+            ctx.lineTo(200, 300);
+            ctx.lineTo(300, 400);
+            ctx.closePath();
+            ctx.fillStyle = '#A52A2A';
+            ctx.fill();
+            ctx.restore();
+        }
+
+        function drawTrees() {
+            ctx.save();
+            // Trunk
+            ctx.fillStyle = '#8B4513';
+            ctx.fillRect(500, 450, 20, 150);
+            // Leaves
+            ctx.beginPath();
+            ctx.moveTo(480, 450);
+            ctx.lineTo(510, 350);
+            ctx.lineTo(540, 450);
+            ctx.closePath();
+            ctx.fillStyle = '#006400';
+            ctx.fill();
+            ctx.restore();
+        }
+
+        function drawLandscape() {
+            // Draw ground
+            ctx.fillStyle = '#228B22';
+            ctx.fillRect(0, 550, canvas.width, 50);
+        }
+
+        function animate(time) {
+            const deltaTime = time - lastTime;
+            lastTime = time;
+
+            cycle = (cycle + deltaTime * 0.0001) % 1;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            drawLandscape();
+            drawSunMoon(cycle);
+            drawHouse();
+            drawTrees();
+
+            requestAnimationFrame(animate);
+        }
+
+        requestAnimationFrame(animate);
+    </script>
+</body>
+</html>
