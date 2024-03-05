@@ -1,0 +1,24 @@
+{
+  "name": "ryanoliver",
+  "version": "1.0.0",
+  "description": "it 121 hw",
+  "main": "script.js",
+  "dependencies": {
+    "corepack": "^0.23.0",
+    "npm": "^10.2.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RyanOliver0/IT121.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RyanOliver0/IT121/issues"
+  },
+  "homepage": "https://github.com/RyanOliver0/IT121#readme"
+}
